@@ -3,45 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Paragraphs</title>
+  <title>Event Propagation Demo</title>
+  <style>
+    div {
+      padding: 20px;
+      margin: 10px;
+      border: 2px solid black;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Buttons for adding and removing paragraphs -->
-  <button id="addParagraphBtn">Add Paragraph</button>
-  <button id="removeParagraphBtn">Remove Last Paragraph</button>
+  <!-- Outer div -->
+  <div id="outerDiv">
+    Outer Div
+    <button id="outerBtn">Outer Button</button>
 
-  <!-- Div where paragraphs will be added or removed -->
-  <div id="paragraphContainer"></div>
+    <!-- Middle div -->
+    <div id="middleDiv">
+      Middle Div
+      <button id="middleBtn">Middle Button</button>
+
+      <!-- Inner div -->
+      <div id="innerDiv">
+        Inner Div
+        <button id="innerBtn">Inner Button</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // Get the buttons and the container div
-    const addParagraphBtn = document.getElementById('addParagraphBtn');
-    const removeParagraphBtn = document.getElementById('removeParagraphBtn');
-    const paragraphContainer = document.getElementById('paragraphContainer');
+    // Select the elements
+    const outerDiv = document.getElementById('outerDiv');
+    const middleDiv = document.getElementById('middleDiv');
+    const innerDiv = document.getElementById('innerDiv');
 
-    // Add an event listener to the "Add Paragraph" button
-    addParagraphBtn.addEventListener('click', function() {
-      // Create a new paragraph element
-      const newParagraph = document.createElement('p');
-      // Set the text content of the new paragraph
-      newParagraph.textContent = 'This is a new paragraph.';
-      // Append the new paragraph to the container div
-      paragraphContainer.appendChild(newParagraph);
-    });
+    const outerBtn = document.getElementById('outerBtn');
+    const middleBtn = document.getElementById('middleBtn');
+    const innerBtn = document.getElementById('innerBtn');
 
-    // Add an event listener to the "Remove Last Paragraph" button
-    removeParagraphBtn.addEventListener('click', function() {
-      // Check if there are any paragraphs to remove
-      if (paragraphContainer.lastChild) {
-        // Remove the last paragraph from the container div
-        paragraphContainer.removeChild(paragraphContainer.lastChild);
-      } else {
-        // If no paragraphs exist, alert the user
-        alert('No paragraphs to remove!');
-      }
+    // Event listener for Outer Div (Capturing phase)
+    outerDiv.addEventListener('click', function(e) {
+      alert('Clicked on ' + e.target.id + ' (Outer Div)');
+    }, true); // true means capturing phase
+
+    // Event listener for Middle Div (Capturing phase)
+    middleDiv.addEventListener('click', function(e) {
+      alert('Clicked on ' + e.target.id + ' (Middle Div)');
+    }, true); // true means capturing phase
+
+    // Event listener for Inner Div (Capturing phase)
+    innerDiv.addEventListener('click', function(e) {
+      alert('Clicked on ' + e.target.id + ' (Inner Div)');
+    }, true); // true means capturing phase
+
+    // Event listener for Outer Button (Bubbling phase)
+    outerBtn.addEventListener('click', function(e) {
+      alert('Clicked on ' + e.target.id + ' (Outer Button)');
+    }); // default is bubbling phase
+
+    // Event listener for Middle Button (Bubbling phase)
+    middleBtn.addEventListener('click', function(e) {
+      alert('Clicked on ' + e.target.id + ' (Middle Button)');
+    }); // default is bubbling phase
+
+    // Event listener for Inner Button (Bubbling phase) with stopPropagation
+    innerBtn.addEventListener('click', function(e) {
+      alert('Clicked on ' + e.target.id + ' (Inner Button)');
+      e.stopPropagation(); // Stop event propagation to prevent bubbling
     });
   </script>
 
 </body>
 </html>
+
