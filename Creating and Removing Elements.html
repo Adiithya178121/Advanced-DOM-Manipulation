@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Paragraphs</title>
+</head>
+<body>
+
+  <!-- Buttons for adding and removing paragraphs -->
+  <button id="addParagraphBtn">Add Paragraph</button>
+  <button id="removeParagraphBtn">Remove Last Paragraph</button>
+
+  <!-- Div where paragraphs will be added or removed -->
+  <div id="paragraphContainer"></div>
+
+  <script>
+    // Get the buttons and the container div
+    const addParagraphBtn = document.getElementById('addParagraphBtn');
+    const removeParagraphBtn = document.getElementById('removeParagraphBtn');
+    const paragraphContainer = document.getElementById('paragraphContainer');
+
+    // Add an event listener to the "Add Paragraph" button
+    addParagraphBtn.addEventListener('click', function() {
+      // Create a new paragraph element
+      const newParagraph = document.createElement('p');
+      // Set the text content of the new paragraph
+      newParagraph.textContent = 'This is a new paragraph.';
+      // Append the new paragraph to the container div
+      paragraphContainer.appendChild(newParagraph);
+    });
+
+    // Add an event listener to the "Remove Last Paragraph" button
+    removeParagraphBtn.addEventListener('click', function() {
+      // Check if there are any paragraphs to remove
+      if (paragraphContainer.lastChild) {
+        // Remove the last paragraph from the container div
+        paragraphContainer.removeChild(paragraphContainer.lastChild);
+      } else {
+        // If no paragraphs exist, alert the user
+        alert('No paragraphs to remove!');
+      }
+    });
+  </script>
+
+</body>
+</html>
